@@ -1,0 +1,122 @@
+
+.container{
+  display: grid;
+  width:50%;
+  margin-left: 25%;
+  grid-gap: 0.3rem;
+
+}
+.static_pane {
+}
+.base_info_pane{
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 100%;
+}
+.questionare_pane{
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 100%;
+}
+
+.questionare_pane>div {
+
+}
+
+.base_info_pane>div {
+
+}
+.sc{
+  display: grid;
+}
+.sc select {
+  height:2rem;
+}
+
+.stc>div:first-child {
+  border-bottom: #DBDEFB;
+  border-bottom-style: groove;
+  border-bottom-width: 1px;
+}
+.rc>div:first-child {
+  border-bottom: #DBDEFB;
+  border-bottom-style: groove;
+  border-bottom-width: 1px;
+}
+.rc-2>div:first-child {
+  border-bottom: #DBDEFB;
+  border-bottom-style: groove;
+  border-bottom-width: 1px;
+}
+
+.stc>div:last-child {
+  padding: 0.2rem;
+}
+.dc {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  grid-gap: 0.3rem;
+}
+.dtc {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.dtc>div {
+  padding:0.1rem;
+}
+input {
+  max-width:100%;
+  width: -webkit-fill-available;
+  height:1.3rem;
+}
+.rc {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.rc>div:last-child {
+  display:grid;
+  grid-template-columns: auto auto auto;
+}
+.rc-2>div:last-child {
+  display:grid;
+  grid-template-columns: auto auto;
+}
+.container button {
+  margin-top: 2rem;
+  width: 100%;
+  height:2rem;
+}
+@media only screen and (max-width: 500px) {
+    body {
+      margin:0;
+    }
+    .container{
+      display: grid;
+      width:auto;
+      margin:3%;
+      margin-bottom: 6%;
+      grid-gap: 0.3rem;
+      grid-template-rows: auto auto;
+      grid-template-columns: 100%;
+    }
+}
+
+.comp {
+}
+.emptyInputMsg:before {
+  content:"";
+  border-left-style: solid;
+  border-left-width: thick;
+  border-left-color: #FF0000;
+}
+.emptyInputMsg:after {
+  margin-left: 2rem;
+  content:"请填写。";
+  color: red;
+}
+.cfmTitle {
+  color:red;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+}

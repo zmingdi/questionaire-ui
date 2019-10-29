@@ -1,0 +1,23 @@
+.resultPane{
+  display:grid;
+  grid-gap: 0.3rem;
+}
+.resultComp{
+  display:grid;
+  grid-template-columns: 70% auto;
+  border-style: dotted;
+  border-width: thin;
+  background-color: #f3f3f3;
+  padding:0.3rem;
+  grid-gap:0.4rem;
+  border-radius: 0.5rem;
+}
+.resultTitleComp{
+  
+}
+.resultPriceComp{
+  text-align: end;
+}
+.resultDescComp{
+  grid-column-start: span 2;
+}
