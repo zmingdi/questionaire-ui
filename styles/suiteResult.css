@@ -11,13 +11,30 @@
   padding:0.3rem;
   grid-gap:0.4rem;
   border-radius: 0.5rem;
+  grid-template-rows: auto auto;
 }
 .resultTitleComp{
-  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-emphasis: #000000;
+  white-space:nowrap;
 }
 .resultPriceComp{
   text-align: end;
 }
 .resultDescComp{
   grid-column-start: span 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-emphasis: #000000;
+  
+}
+.s_view_resean {
+    float:right;
+}
+.addItems {
+  grid-column-start: span 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-emphasis: #000000;
 }

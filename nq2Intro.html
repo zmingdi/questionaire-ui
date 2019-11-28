@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>Intro Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="/js/fingerprint.js"></script>
+    <script src="../js/nq2.js"></script>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <style>
+      .item-row {
+        display:grid;
+        grid-template-columns:30% auto;
+        border-style: solid;
+        border-width: thin;
+      }
+      .intro_title {
+        font-size:large;
+        font-weight: bold;
+      }
+      .next {
+        float:right;
+      }
+      .dc {
+        grid-template-columns: auto 25%;
+      }
+      .container {
+      height: 90%;
+      max-height: 15rem;
+      overflow-y: scroll;
+      }
+      body {
+        grid-template-rows: 60% 35%;
+      }
+    </style>
+	</head>
+	<body>
+    <div>
+      <div class='dc'>
+        <h2>1+X体检方案制定</h2>
+        <div><a href="nq2.html">进入问卷</a></div>
+      </div>
+        <p>体检，不只是走一个形式，抽点血，照几个片子。更多的是针对个人的健康状况，量体裁衣的订制体检项目。</p>
+        <p>检前问卷，就是通过一些基础的问题，了解、分析个人情况，生成体检项目建议。做到有的放矢，有理可循的身体检查。</p>
+        <p>通过下方的体检问卷对话，提交对应信息，生成体检套餐推荐以及对应加项内容，通过矩阵计算排序得到适合结果以及对应推荐理由。</p>
+      </div>
+    </div>
+    <div class='suite_pane'>
+      <div>
+        <span class='intro_title'>中华医学会推荐基础套餐</span>
+        <span class='show_detail'><a href="javascript:void()">查看详情</a></span>
+      </div>
+      <div class="container">
+        <div class='item-row'>
+          <div><b>项目名称</b></div>
+          <div><b>项目描述</b></div>
+        </div>
+      </div>
+        
+    </div>
+
+    <script>
+      $.get("/questionaire_service/nq2/component/groups/genToken/"+fingerprint);
+      $(".container").hide();
+      $.get("/questionaire_service/nq2/suite/baseSuite", function(data){
+        $.each(data['items'], function(i, d) {
+          var line = $("<div class='item-row'></div>");
+          line.append("<div>"+d['itemName']+"</div>");
+          line.append("<div>"+d['itemPurpose']+"</div>");
+          $(".container").append(line);
+        })
+      });
+      $('.show_detail').click(function(){
+        if($(".container").is(":visible")) {
+          $('.container').slideUp();
+          $(this).children("a").text("显示详情");
+        } else {
+          $('.container').slideDown();
+          $(this).children("a").text("收起");
+        }
+      })
+      console.log(fingerprint);
+    </script>
+	</body>
+</html>

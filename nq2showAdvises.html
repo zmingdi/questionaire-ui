@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="save" content="history">
+		<title>体检问卷_体检订制设计_体检套餐设计_xuanmo.site</title>
+		<meta name="keywords" content="体检问卷,体检套餐设计" />
+		<meta name="description" content="体检，不只是走一个形式，抽点血，照几个片子。更多的是针对个人的健康状况，量体裁衣的订制体检项目。体检问卷是针对个人的身体情况、生活习惯进行简单了解。基于体检问卷量身设计适合自己健康状况的体检套餐。做到有的放矢，有理可循的身体检查。"/>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<script src="/js/fingerprint.js"></script>
+    <script src="js/nq2.js"></script>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <style>
+      .container {
+          height: 100%;
+          max-height: 100%;
+          overflow-y: scroll;
+      }
+    </style>
+	</head>
+	<body>
+    <div>
+      <div class='dc'>
+        <h2>体检检查内容推荐</h2>
+        <div><span class="next"><a href="javascript:showRegistration()">确认购买内容</a></span></div>
+      </div>
+    </div>
+    <div class="container">
+    
+    </div>
+    <script>
+      $.ajax({
+        headers: {
+            "fingerprint": new Fingerprint().get()
+        },
+        type: "GET",
+        url: "/questionaire_service/nq2/advisor/addons",
+        success: function (data) {
+          $.each(data, function(i, d){
+            var comp = $("<div class='qs'></div>");
+            comp.append("<div class='group_title active'><span><input type='checkbox' name='pid' value='"+d['packageId']+"'/><b>"+d['packageName']+"</span></b><span class='show_detail'>"+d['packagePrice']+"</span></div>");
+            var descComp = $("<div>"+d['packageDescription']+"</div>");
+            
+            descComp.append("<span class='show_detail'><a href='javascript:void(0);'>显示详情</a></span>");
+            comp.append(descComp);
+            descComp.children('.show_detail').click(function(e){
+            if(comp.children().last().is(":visible")){
+              $(e.currentTarget).parent().next().slideUp();
+              $(e.currentTarget).children("a").text("显示详情");
+            }else {
+              $(".iactive").prev().children("span.show_detail").children("a").text("显示详情");
+              $(".iactive").slideUp();
+              $(".iactive").removeClass("iactive");
+              $(e.currentTarget).parent().next().slideDown();
+              $(e.currentTarget).children("a").text("收起");
+              $(e.currentTarget).parent().next().attr("class","iactive");
+            }
+            console.log(e);
+            });
+            comp.append(addItemList(d['items']));
+            $(".container").append(comp);
+
+          });
+        },
+      });
+     function showRegistration(){
+       var ids = [];
+       $.each($("input[name='pid']:checked"),function(i,d){
+         ids.push(d.value);
+       });
+       $.ajax({
+         headers: {
+             "fingerprint": new Fingerprint().get()
+         },
+         type: "GET",
+         data:{"ids":ids},
+         dataType:"json",
+         traditional:true,//防止深度序列化
+         url: "/questionaire_service/nq2/advisor/selected",
+         success: function (data) {
+           console.log(data);
+         }
+       });
+       window.location="registration.html";
+       console.log(ids);
+     }
+    </script>
+	</body>
+</html>

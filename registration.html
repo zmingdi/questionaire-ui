@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<title>选择体检日期以及门店</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="/js/fingerprint.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/jquery-ui.min.css" />
+    <style>
+      .contact_info>div>span:first-child {
+        width: 6rem;
+      }
+      .contact_info>div>span {
+        line-height:100%;
+        height:100%;
+      }
+      .contact_info {
+        display:grid;
+      }
+      .contact_info>div{
+        display:grid;
+        grid-gap:0.5rem;
+        grid-template-columns: 6rem auto;
+      }
+      .addons>ul{
+        list-style:none;
+        padding:0;
+      }
+      .addons>ul>li{
+        background-color:lightgrey;
+        margin:0.3rem 0;
+      }
+      .order-detail {
+        display:grid;
+        grid-gap: 0.7rem;
+      }
+      .dc {
+        margin-top:0;
+      }
+      .payment_method img {
+        width: 100%;
+        max-width:100%;
+        max-height:3rem;
+      }
+      .payment_method>div {
+        display:grid;
+        grid-template-columns: 48% 48%;
+      }
+      .payment_method>div>span:first-child{
+        width:100%;
+      }
+    </style>
+	</head>
+	<body>
+    <div class="showDetails" style="display:none">
+      
+    </div>
+    <div class="dc">
+      <h2>确认体检订单信息</h2>
+    </div>
+    
+    <div class='container order'>
+      <div class='contact_info'>
+        <div>
+          <span>姓名：</span><span><input type="text" class="contact_name"/></span>
+        </div>
+        <div>
+          <span>证件号码：</span><span><input type="number" class="id_number"/></span>
+        </div>
+        <div>
+          <span>出生日期：</span><span><input type="date" class="date_of_birth"/></span>
+        </div>
+        <div>
+          <span>手机号码：</span><span><input type="number" class="contact_number"/></span>
+        </div>
+      </div>
+      <div class='contact_info'>
+        <div><span>体检日期:</span><span><input type="date" name="registration_date" /></span></div>
+      </div>
+      <div class='order-detail'>
+        <div class="service_orgnization contact_info">
+          <div>
+            <span>体检门店</span>
+           <select>
+             <option>上海熙康健康管理公司</option>
+             <option>xk2</option>
+             <option>xk3</option>
+             <option>xk4</option>
+           </select>
+          </div>
+        </div>
+        <div class="addons">
+          <div class='contact_info'>
+            <div>
+              <span>加项包列表</span>
+              <span class="next"><a href="javascript:showDialog()">显示套餐全部</a></span>
+            </div>
+           
+          </div>
+        </div>
+        
+        <div class="payment ">
+          <div>
+            <span>支付金额</span><span class="order_charge"></span>
+          </div>
+          <div class='contact_info payment_method'>
+            <div>
+              <span><img src="styles/alipay.png" />alipay</span>
+              <span><img src="styles/wechatpay.jpg" />wechat pay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+     $.ajax({
+       headers: {
+           "fingerprint": new Fingerprint().get()
+       },
+       type: "GET",
+       url: "/questionaire_service/nq2/advisor/showResult",
+       success: function (data) {
+         var addonsComp=$("<ul></ul>");
+           createDialog(data);
+         $.each(data['packages'], function(i,d){
+           addonsComp.append("<li>"+d['packageName'] + '</li>');
+         });
+         $(".addons").append(addonsComp);
+       },
+     });
+     $(".next").click(function(){
+       $.ajax({
+         headers: {
+             "fingerprint": new Fingerprint().get()
+         },
+         type: "GET",
+         url: "/questionaire_service/nq2/advisor/showResult",
+         success: function (data) {
+           
+         },
+       });
+     });
+     function showDialog() {
+       $(".showDetails").dialog("open");
+     }
+     function createDialog(data){
+       $(".showDetails").dialog({
+         'autoOpen':false
+         ,'buttons' :{
+           "OK": function() {
+             $(this).dialog('close');
+           }
+         },
+         'title':"请确认问卷信息",
+         'modal':true,
+         'height':600
+         });
+       var dialog = $(".showDetails");
+       var totalPrice = 0;
+       var sItems = [];
+       var suiteComp = $("<div></div>");
+       suiteComp.append("<div><b>"+data['suite']['suiteName'] +"</b></div>");
+       var itemsComp = $('<div class="items"></div>');
+       $.each(data['suite']['items'],function(i, item){
+         var itemComp = $("<div class='dc'></div>");
+         sItems.push(item['itemName']);
+         itemComp.append("<div>"+item['itemName']+"</div>");
+         itemComp.append("<div>"+item['price']+"</div>");
+         totalPrice+=item['price'];
+         itemsComp.append(itemComp);
+       });
+       
+       suiteComp.append(itemsComp);
+       dialog.append(suiteComp);
+       var addOnComp = $("<div><div>");
+       $.each(data['packages'], function(i,p){
+         var packageComp = $("<div></div>");
+         packageComp.append("<div><b>加项包：" + p['packageName'] + "</b></div>");
+         itemsComp = $('<div class="items"></div>');
+         $.each(p['items'], function(i, item){
+           var itemComp = $("<div class='dc'></div>");
+           
+           if(sItems.indexOf(item['itemName'])>0) {
+             itemComp.append("<div class='dup'>"+item['itemName']+"</div>");
+             itemComp.append("<div class = 'dup'>"+item['price']+"</div>");
+           } else {
+             totalPrice+=item['price'];
+             itemComp.append("<div>"+item['itemName']+"</div>");
+             itemComp.append("<div>"+item['price']+"</div>");
+           }
+           sItems.push(item['itemName']);
+           itemsComp.append(itemComp);
+         });
+         
+         packageComp.append(itemsComp);
+         addOnComp.append(packageComp);
+       })
+       
+       $(".order_charge").text("￥ "+ totalPrice);
+       dialog.append(addOnComp);
+       
+     }
+    </script>
+	</body>
+</html>

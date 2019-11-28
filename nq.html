@@ -2,9 +2,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<title></title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="save" content="history">
-		<title>体检问卷_体检订制设计_体检套餐设计_xuanmo.site</title>
+    <title>体检问卷_体检订制设计_体检套餐设计_xuanmo.site</title>
     <meta name="keywords" content="体检问卷,体检套餐设计" />
     <meta name="description" content="体检，不只是走一个形式，抽点血，照几个片子。更多的是针对个人的健康状况，量体裁衣的订制体检项目。体检问卷是针对个人的身体情况、生活习惯进行简单了解。基于体检问卷量身设计适合自己健康状况的体检套餐。做到有的放矢，有理可循的身体检查。"/>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
@@ -12,34 +14,25 @@
     <link rel="stylesheet" href="styles/jquery-ui.min.css" />
     <script src="js/data.js"></script>
     <link rel="stylesheet" href="styles/styles.css" />
+    <script src="../js/nq.js"></script>
+    <style>
+      .container {
+        display:grid;
+      }
+    </style>
 	</head>
 	<body>
     <div class="container">
-      <div class="static_pane">
-        <div>
-          <h3>检前问卷调查</h3>
-          <p>体检，不只是走一个形式，抽点血，照几个片子。更多的是针对个人的健康状况，量体裁衣的订制体检项目。</p>
-          <p>检前问卷，就是通过一些基础的问题，了解、分析个人情况，生成体检项目建议。做到有的放矢，有理可循的身体检查。</p>
-          <p>通过下方的体检问卷对话，提交对应信息，生成体检套餐推荐以及对应加项内容，通过矩阵计算排序得到适合结果以及对应推荐理由。</p>
-        </div>
-      </div>
-      <div class="base_info_pane">
-        
-      </div>
-      <div class="questionare_pane">
-        
-      </div>
-      <div>
-        <button>提交问卷</button>
-      </div>
-    </div>
-    <div id="confirmDialog">
       
     </div>
-    <script src="js/proto.js"></script>
-    <script src="js/index.js"></script>
+    <div>
+      <input type="button" value="提交问卷"></input>
+    </div>
     <script>
-
+      paintGroups();
+      
     </script>
+    
+    
 	</body>
 </html>

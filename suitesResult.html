@@ -32,10 +32,10 @@
       }
       var url = "/questionaire_service/result/" + GetQueryString("sessionId");
       $.get(url, function(data) {
-        $.each(data['matches'].sort(function(a,b){
-          return a['ranking']-b['ranking'];
+        $.each(data.sort(function(a,b){
+          return b['ranking']-a['ranking'];
         }), function(i,d){
-          $('.resultPane').append(new itemBlock(d['suite']['suiteName'],d['price'],d['suite']['suiteDescription'],d['suite']['shoppingAddress']).write());
+          $('.resultPane').append(new itemBlock(d['suite']['suiteName'],d['suite']['suitePrice'],d['suite']['suiteDescription'],d['suite']['shoppingAddress'],d['addItems']).write());
         });
         
         console.log(data);

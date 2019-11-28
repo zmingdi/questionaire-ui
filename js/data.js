@@ -31,7 +31,7 @@ var issueCompData = {
 }
 var diseaseCompData = {
   name:"issues",
-  label:"您是否有自觉症状",
+  label:"您是否有过往病症",
   data: {
     "无":"none"
     ,"心脏病":"heart_disease"
