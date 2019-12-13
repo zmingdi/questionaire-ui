@@ -36,7 +36,7 @@
             "fingerprint": new Fingerprint().get()
         },
         type: "GET",
-        url: "/questionaire_service/nq2/advisor/addons",
+        url: "/questionaire_service/advise/addons",
         success: function (data) {
           $.each(data, function(i, d){
             var comp = $("<div class='qs'></div>");
@@ -78,7 +78,7 @@
          data:{"ids":ids},
          dataType:"json",
          traditional:true,//防止深度序列化
-         url: "/questionaire_service/nq2/advisor/selected",
+         url: "/questionaire_service/advise/selected",
          success: function (data) {
            console.log(data);
          }

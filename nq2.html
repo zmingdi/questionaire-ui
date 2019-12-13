@@ -58,9 +58,9 @@
                   "fingerprint": new Fingerprint().get()
               },
               type: "GET",
-              url: "/questionaire_service/nq2/component/groups/next/",
+              url: "/questionaire_service/group/next",
               success: function (data) {
-                if(data.length) {
+                if(data>0) {
                   location.reload();
                 } else {
                   window.location.href = "nq2resultPreview.html";

@@ -53,6 +53,10 @@
       .payment_method>div>span:first-child{
         width:100%;
       }
+      .dup {
+        text-decoration: line-through;
+        color: red;
+      }
     </style>
 	</head>
 	<body>
@@ -122,7 +126,7 @@
            "fingerprint": new Fingerprint().get()
        },
        type: "GET",
-       url: "/questionaire_service/nq2/advisor/showResult",
+       url: "/questionaire_service/advise/showResult",
        success: function (data) {
          var addonsComp=$("<ul></ul>");
            createDialog(data);
@@ -138,7 +142,7 @@
              "fingerprint": new Fingerprint().get()
          },
          type: "GET",
-         url: "/questionaire_service/nq2/advisor/showResult",
+         url: "/questionaire_service/advise/showResult",
          success: function (data) {
            
          },
@@ -169,8 +173,8 @@
          var itemComp = $("<div class='dc'></div>");
          sItems.push(item['itemName']);
          itemComp.append("<div>"+item['itemName']+"</div>");
-         itemComp.append("<div>"+item['price']+"</div>");
-         totalPrice+=item['price'];
+         itemComp.append("<div>"+item['itemPrice']+"</div>");
+         totalPrice+=item['itemPrice'];
          itemsComp.append(itemComp);
        });
        

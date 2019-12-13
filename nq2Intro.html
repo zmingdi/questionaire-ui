@@ -50,7 +50,7 @@
     <div class='suite_pane'>
       <div>
         <span class='intro_title'>中华医学会推荐基础套餐</span>
-        <span class='show_detail'><a href="javascript:void()">查看详情</a></span>
+        <span class='show_detail'><a href="javascript:void(0)">查看详情</a></span>
       </div>
       <div class="container">
         <div class='item-row'>
@@ -62,26 +62,35 @@
     </div>
 
     <script>
-      $.get("/questionaire_service/nq2/component/groups/genToken/"+fingerprint);
-      $(".container").hide();
-      $.get("/questionaire_service/nq2/suite/baseSuite", function(data){
-        $.each(data['items'], function(i, d) {
-          var line = $("<div class='item-row'></div>");
-          line.append("<div>"+d['itemName']+"</div>");
-          line.append("<div>"+d['itemPurpose']+"</div>");
-          $(".container").append(line);
-        })
-      });
-      $('.show_detail').click(function(){
-        if($(".container").is(":visible")) {
-          $('.container').slideUp();
-          $(this).children("a").text("显示详情");
-        } else {
-          $('.container').slideDown();
-          $(this).children("a").text("收起");
-        }
-      })
-      console.log(fingerprint);
+      $.ajax({
+          headers: {
+              "fingerprint": new Fingerprint().get()
+          },
+          type: "GET",
+          url: "/questionaire_service/token/create",
+          success: function (data) {
+            $(".container").hide();
+            $.get("/questionaire_service/suite/baseSuite", function(data){
+              $.each(data['items'], function(i, d) {
+                var line = $("<div class='item-row'></div>");
+                line.append("<div>"+d['itemName']+"</div>");
+                line.append("<div>"+d['itemPurpose']+"</div>");
+                $(".container").append(line);
+              })
+            });
+            $('.show_detail').click(function(){
+              if($(".container").is(":visible")) {
+                $('.container').slideUp();
+                $(this).children("a").text("显示详情");
+              } else {
+                $('.container').slideDown();
+                $(this).children("a").text("收起");
+              }
+            })
+            console.log(fingerprint);
+          },
+        });
+      
     </script>
 	</body>
 </html>

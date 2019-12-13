@@ -157,7 +157,7 @@ function paintQuestions(token) {
           "fingerprint": fingerprint
       },
       type: "GET",
-      url: "/questionaire_service/nq2/component/groups/current/",
+      url: "/questionaire_service/group/current",
       success: function (data) {
           $.each(data, function(i,di){
               var dq=di['question'];
@@ -185,8 +185,11 @@ function paintQuestions(token) {
               
             });
             // $(".related").parent().parent().next().hide();
-          }
-      });
+          },
+          
+      }).fail(function(data){
+            window.location="/nq2Intro.html";
+          });
   }
   
   function validateEmptyInput() {
@@ -281,12 +284,11 @@ function postData() {
       },
       type: "POST",
       data: postData,
-      url: "/questionaire_service/nq2/component/groups/addData/",
+      url: "/questionaire_service/selection/addData/",
       success: function (data) {
         
       },
     });
-  // TODO remove this info log
   return postData;
 }
 
