@@ -268,7 +268,7 @@ function postData() {
         txt.push( $(vsd).val());
       }
     });
-    v=v.join(',');
+    //v=v.join(',');
     txt = txt.join(",");
     
     postData.push({
@@ -285,6 +285,7 @@ function postData() {
       type: "POST",
       data: postData,
       url: "/questionaire_service/selection/addData/",
+      traditional:true,
       success: function (data) {
         
       },
